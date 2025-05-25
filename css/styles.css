@@ -2,6 +2,17 @@
 body {
   transition: background 0.3s, color 0.3s;
   font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.content {
+  flex: 1;
 }
 
 /* === Theme modes === */
@@ -107,7 +118,7 @@ td {
   padding: 8px;
 }
 
-td > button,
+td>button,
 td.text-end .btn {
   margin-left: 4px;
 }
