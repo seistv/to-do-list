@@ -6,6 +6,7 @@ export function initRowActions(todoListBody, updateMoveButtons) {
     if (e.target.closest(".delete-btn")) {
       row.remove();
       updateMoveButtons();
+      updateSelectAllState();
     } else if (e.target.closest(".move-up-btn")) {
       const prev = row.previousElementSibling;
       if (prev) row.parentNode.insertBefore(row, prev);
@@ -43,6 +44,7 @@ export function initAddRowButton(addRowBtn, todoListBody, updateMoveButtons) {
 
     todoListBody.appendChild(newRow);
     updateMoveButtons();
+    updateSelectAllState();
   });
 }
 
@@ -60,3 +62,21 @@ export function updateMoveButtons(todoListBody) {
         index === rows.length - 1 ? "hidden" : "visible";
   });
 }
+
+const updateSelectAllState = () => {
+  const selectAll = document.querySelector("#selectAll");
+  const checkboxes = document.querySelectorAll(".row-checkbox");
+  // If there are no checkboxes, disable the "Select All" checkbox
+  if (checkboxes.length === 0) {
+    selectAll.checked = false;
+    selectAll.indeterminate = false;
+    selectAll.disabled = true;
+    selectAll.classList.remove("indeterminate");
+    selectAll.classList.add("disabled");
+    return;
+  }
+
+  // If there are checkboxes, ensure "Select All" is enabled
+  selectAll.disabled = false;
+  selectAll.classList.remove("disabled");
+};

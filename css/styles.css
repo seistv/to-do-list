@@ -124,8 +124,9 @@ td.text-end .btn {
 }
 
 .actions-column {
-  width: 120px;
+  width: 1px;
   white-space: nowrap;
+  align-items: center;
 }
 
 .table thead th {
@@ -136,35 +137,52 @@ td.text-end .btn {
 .completion-checkbox {
   position: relative;
   appearance: none;
-  margin-left: 5px;
-  margin-right: 5px;
-  width: 20px; /* Set the width of the checkbox */
-  height: 20px; /* Set the height of the checkbox */
-  border: 1px solid #69665C; /* Border color for the checkbox */
-  border-radius: 3px; /* Optional: adjust border radius */
-  background-color: transparent; /* No background color */
-  cursor: pointer; /* Pointer cursor on hover */
+  margin: 0 5px;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #69665C;
+  border-radius: 3px;
+  background-color: transparent;
+  cursor: pointer;
 }
 
-/* Hidden initial state */
+/* Base state for ::before (checkmark or indeterminate line) */
 .completion-checkbox::before {
   content: '';
   position: absolute;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+  transform: scale(0);
+}
+
+/* Checked (✔) */
+.completion-checkbox:checked::before {
   left: 4px;
   bottom: 1px;
   width: 10px;
   height: 25px;
   border: solid #75ce52;
   border-width: 0 3px 3px 0;
-  transform: rotate(45deg) scale(0);
-  opacity: 0;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-/* Checkmark style */
-.completion-checkbox:checked::before {
   transform: rotate(45deg) scale(1);
   opacity: 1;
+}
+
+/* Indeterminate (—) */
+.completion-checkbox.indeterminate::before {
+  left: 0;
+  bottom: 7px;
+  width: 18px;
+  height: 2px;
+  background-color: #75ce52;
+  border: none;
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* Unchecked (smooth exit transition) */
+.completion-checkbox:not(:checked):not(.indeterminate)::before {
+  opacity: 0;
+  transform: scale(0);
 }
 
 .checkbox-th {
@@ -180,4 +198,8 @@ td.text-end .btn {
 .completed {
   text-decoration: line-through; /* Adds the strike-through line */
   color: #2f6945; /* Optional: change color to indicate completed status */
-} 
+}
+
+.disabled {
+  background-color: gray;
+}
